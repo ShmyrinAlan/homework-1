@@ -25,18 +25,21 @@ package com.narxoz.rpg.equipment;
  */
 public class IronSword implements Weapon {
 
-    private int damage;
-    private String weaponType;
+    private final int damage;
+    private final String weaponType;
+    private final String weaponElement;
 
     public IronSword() {
         this.damage = 25;
         this.weaponType = "Sword";
+        this.weaponElement = "Default";
     }
 
     // TODO: Implement methods from Weapon interface
     // Define those methods in the Weapon interface first!
 
     // Example method structure:
+    @Override
     public int getDamage() {
         return damage;
     }
@@ -45,10 +48,21 @@ public class IronSword implements Weapon {
         return "Iron Sword (Medieval) - A sturdy blade forged from iron";
     }
 
+    @Override
+    public String getWeaponType() {
+        return weaponType;
+    }
+
+    @Override
+    public String getWeaponElement() {
+        return weaponElement;
+    }
+
     public void displayInfo() {
         System.out.println("Weapon: " + getWeaponInfo());
         System.out.println("Damage: " + damage);
         System.out.println("Type: " + weaponType);
+        System.out.println("Element: " + weaponElement);
     }
 
     // TODO: Consider adding theme-specific properties

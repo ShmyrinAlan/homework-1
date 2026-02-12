@@ -19,5 +19,10 @@ public interface Weapon {
     // - String getWeaponInfo()
     // - String getWeaponType()
     // - any theme-specific properties?
+     int getDamage();
+     void displayInfo();
+     String getWeaponInfo();
+     String getWeaponType();
+     String getWeaponElement();
 
 }

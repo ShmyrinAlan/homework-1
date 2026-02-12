@@ -30,6 +30,7 @@ public interface Character {
      int getIntelligence();
      String  getStats();
      void useSpecialAbility();
+     void dispose();
 
     // TODO: Think about equipment
     // Should characters know about their equipped items?

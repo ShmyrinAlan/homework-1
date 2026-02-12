@@ -14,8 +14,8 @@ public class MainCharacterFactory implements CharacterFactory{
 
     @Override
     public Character create(String type, String name) {
-        Character character = registry.get(type).apply(name);
-        if (Objects.isNull(character)) throw new IllegalArgumentException();
-        return character;
+        Function<String,Character> characterType = registry.get(type);
+        if (Objects.isNull(characterType)) throw new IllegalArgumentException();
+        return characterType.apply(name);
     }
 }

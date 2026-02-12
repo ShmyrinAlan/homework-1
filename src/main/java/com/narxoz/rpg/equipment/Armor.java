@@ -19,5 +19,8 @@ public interface Armor {
     // - String getArmorInfo()
     // - String getArmorType()
     // - any theme-specific properties?
-
+     int getDefense();
+     String getArmorInfo();
+     String getArmorType();
+     String getArmorMaterial();
 }

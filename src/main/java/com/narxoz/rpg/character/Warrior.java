@@ -31,7 +31,7 @@ public class Warrior implements Character {
     private final AtomicInteger mana;
     private final AtomicInteger strength;
     private final AtomicInteger intelligence;
-    private final AtomicBoolean isBerserk;
+    private final AtomicBoolean isAbility;
     private final ScheduledExecutorService service;
 
     // TODO: Add fields for equipped weapon and armor
@@ -45,7 +45,7 @@ public class Warrior implements Character {
         this.mana = new AtomicInteger(rn.nextInt(10,50));
         this.strength = new AtomicInteger(rn.nextInt(70,100));
         this.intelligence = new AtomicInteger(rn.nextInt(5,23));
-        this.isBerserk = new AtomicBoolean(false);
+        this.isAbility = new AtomicBoolean(false);
         this.service = Executors.newScheduledThreadPool(1);
     }
 
@@ -64,20 +64,25 @@ public class Warrior implements Character {
 
     @Override
     public void useSpecialAbility() {
-        if(isBerserk.get()){
+        if(isAbility.get()){
             System.out.println("Ability is");
         }else {
             strength.set((int)Math.round(strength.get()*1.2));
             health.set((int)Math.round(health.get()*1.3));
-            isBerserk.set(true);
+            isAbility.set(true);
             System.out.println("For the next 10s warrior gets a berserk mod(strength bonus 20% and health bonus 30%)");
             service.schedule(() -> {
                 strength.set((int)Math.round(strength.get()/1.2));
                 health.set((int)Math.round(health.get()/1.3));
-                isBerserk.set(false);
+                isAbility.set(false);
                 System.out.println("Berserk mod was ended");
             }, 10, TimeUnit.SECONDS);
         }
+    }
+
+    @Override
+    public void dispose() {
+        service.shutdown();
     }
 
     // TODO: Implement methods from Character interface

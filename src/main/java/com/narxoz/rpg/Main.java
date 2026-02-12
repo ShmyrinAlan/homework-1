@@ -3,6 +3,7 @@ package com.narxoz.rpg;
 import com.narxoz.rpg.character.Character;
 import com.narxoz.rpg.config.AppConfig;
 
+import java.util.Objects;
 import java.util.Scanner;
 
 /**
@@ -24,20 +25,50 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("=== RPG Character & Equipment System ===\n");
         Scanner scan = new Scanner(System.in);
-        Character warrior = AppConfig.createMainCharacterFactory().create("Warrior", "Abor");
-        int choice = 0;
+        Character character = null;
+        String type, name, choice;
         boolean loop = true;
         while (loop) {
-            choice = scan.nextInt();
             // TODO: Demonstrate Factory Method Pattern
             // Create different character types (Warrior, Mage, Archer, etc.)
             // Think: How can you create characters without using if-else chains?
             // Think: What class/interface should handle character creation?
-            switch (choice){
-                case 1 ->{System.out.println(warrior.getStats());}
-                case 2 ->{warrior.useSpecialAbility();}
-                case -1 -> {loop = false;}
+            if (Objects.isNull(character)){
+                System.out.println("""
+                        =========================
+                        Choice a character type:
+                        Mage
+                        Warrior
+                        Archer
+                        ============================""");
+                type = scan.nextLine().toLowerCase().trim();
+                System.out.println("Enter a character's name: ");
+                name = scan.nextLine().toLowerCase().trim();
+                try{
+                    character = AppConfig.createMainCharacterFactory().create(type,name);
+                }catch (IllegalArgumentException e){
+                    System.out.println("type is undefined");
+                }
+            }else {
+                System.out.println("""
+                        ========================
+                        write an action command:
+                        show stats
+                        use ability
+                        stop
+                        =========================""");
+                choice = scan.nextLine();
+                switch (choice.trim().toLowerCase()){
+                    case "show stats" -> {
+                        System.out.println(character.getStats());}
+                    case "use ability" -> {character.useSpecialAbility();}
+                    case "stop" -> {loop = false;}
+                    default -> {
+                        System.out.println("Bad command");
+                    }
+                }
             }
+
 
 
             // TODO: Demonstrate Abstract Factory Pattern
@@ -68,6 +99,7 @@ public class Main {
             // - Add a new character class (e.g., Rogue, Paladin)
             // - Add a new equipment theme (e.g., Dragon Slayer, Undead)
         }
+        character.dispose();
         System.out.println("\n=== Demo Complete ===");
     }
 
