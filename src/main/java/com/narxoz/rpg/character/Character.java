@@ -23,6 +23,14 @@ public interface Character {
     // - void displayStats()
     // - void useSpecialAbility()
 
+     String getName();
+     int getHealth();
+     int getMana();
+     int getStrength();
+     int getIntelligence();
+     String  getStats();
+     void useSpecialAbility();
+
     // TODO: Think about equipment
     // Should characters know about their equipped items?
     // How will you handle equipping weapons and armor?

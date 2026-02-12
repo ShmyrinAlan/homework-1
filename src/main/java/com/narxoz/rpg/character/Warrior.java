@@ -1,5 +1,9 @@
 package com.narxoz.rpg.character;
 
+import lombok.Data;
+
+import java.util.Random;
+
 /**
  * Example concrete implementation of a Character.
  *
@@ -16,6 +20,7 @@ package com.narxoz.rpg.character;
  * - Archer (balanced stats, ranged combat)
  * - (Optional) Additional classes: Rogue, Paladin, etc.
  */
+@Data
 public class Warrior implements Character {
 
     private String name;
@@ -23,39 +28,57 @@ public class Warrior implements Character {
     private int mana;
     private int strength;
     private int intelligence;
+    private Random rn;
+    private Thread ability;
 
     // TODO: Add fields for equipped weapon and armor
     // Think: Should Warrior know about its equipment?
 
-
     public Warrior(String name) {
         this.name = name;
+        this.rn = new Random();
         // Warrior stats: high health and strength, low mana and intelligence
-        this.health = 150;
-        this.mana = 30;
-        this.strength = 80;
-        this.intelligence = 20;
+        this.health = rn.nextInt(150, 200);
+        this.mana = rn.nextInt(10,50);
+        this.strength = rn.nextInt(70,100);
+        this.intelligence = rn.nextInt(5,23);
+        this.ability = new Thread(()->{
+            long endTime = System.nanoTime() + 10 *1_000_000_000L;
+            strength = (int)Math.round(strength*1.2);
+            health = (int)Math.round(health*1.3);
+            System.out.println("For the next 10s warrior gets a berserk mod(strength bonus 20% and health bonus 30%)");
+            while (System.nanoTime()<endTime){}
+            strength = (int)Math.round(strength/1.2);
+            health = (int)Math.round(health/1.3);
+            System.out.println("Berserk mod was ended");
+        });
+    }
+
+    @Override
+    public String getStats() {
+        return String.format(
+                """
+                =========== Warrior ===========
+                Name: %s
+                HP: %d
+                Mana: %d
+                Strength: %d
+                Intelligence: %d
+                """, name,health,mana,strength,intelligence);
+    }
+
+    @Override
+    public void useSpecialAbility() {
+        if(ability.isAlive()){
+            System.out.println("Ability is");
+        }else {
+            ability.start();
+        }
     }
 
     // TODO: Implement methods from Character interface
     // You need to define those methods in Character interface first!
 
-    // Example method structure:
-    public String getName() {
-        return name;
-    }
-
-    public void displayStats() {
-        System.out.println("=== " + name + " (Warrior) ===");
-        System.out.println("Health: " + health);
-        System.out.println("Mana: " + mana);
-        System.out.println("Strength: " + strength);
-        System.out.println("Intelligence: " + intelligence);
-    }
-
-    public void useSpecialAbility() {
-        System.out.println(name + " uses BERSERKER RAGE! Strength temporarily increased!");
-    }
 
     // TODO: Add equipment-related methods
     // Examples:

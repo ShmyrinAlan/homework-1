@@ -29,6 +29,13 @@
                 <configuration>
                     <source>17</source>
                     <target>17</target>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>1.18.42</version>
+                        </path>
+                    </annotationProcessorPaths>
                 </configuration>
             </plugin>
 
@@ -41,6 +48,15 @@
                     <mainClass>com.narxoz.rpg.Main</mainClass>
                 </configuration>
             </plugin>
+
         </plugins>
     </build>
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.42</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
 </project>
