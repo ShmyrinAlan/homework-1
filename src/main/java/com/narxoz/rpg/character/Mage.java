@@ -1,5 +1,8 @@
 package com.narxoz.rpg.character;
 
+import com.narxoz.rpg.equipment.Armor;
+import com.narxoz.rpg.equipment.Weapon;
+
 import java.util.Random;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -15,6 +18,8 @@ public class Mage implements Character{
     private final AtomicInteger mana;
     private final AtomicInteger strength;
     private final AtomicInteger intelligence;
+    private Armor armor;
+    private Weapon weapon;
     private final AtomicBoolean isAbility;
     private final ScheduledExecutorService service;
 
@@ -64,6 +69,25 @@ public class Mage implements Character{
     @Override
     public void dispose() {
         service.shutdown();
+    }
+
+    @Override
+    public void equipWeapon(Weapon weapon) {
+        this.weapon = weapon;
+    }
+
+    @Override
+    public void equipArmor(Armor armor) {
+        this.armor = armor;
+    }
+
+    @Override
+    public void displayEquipment() {
+        System.out.println("=======================");
+        weapon.displayInfo();
+        System.out.println("=======================");
+        armor.displayInfo();
+        System.out.println("=======================");
     }
 
     @Override

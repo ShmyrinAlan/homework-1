@@ -23,4 +23,5 @@ public interface Armor {
      String getArmorInfo();
      String getArmorType();
      String getArmorMaterial();
+     void displayInfo();
 }

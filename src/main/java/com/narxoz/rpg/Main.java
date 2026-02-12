@@ -26,7 +26,7 @@ public class Main {
         System.out.println("=== RPG Character & Equipment System ===\n");
         Scanner scan = new Scanner(System.in);
         Character character = null;
-        String type, name, choice;
+        String type = "", name, choice;
         boolean loop = true;
         while (loop) {
             // TODO: Demonstrate Factory Method Pattern
@@ -46,6 +46,8 @@ public class Main {
                 name = scan.nextLine().toLowerCase().trim();
                 try{
                     character = AppConfig.createMainCharacterFactory().create(type,name);
+                    character.equipArmor(AppConfig.createEquipmentFactory(type).createArmor("no armor"));
+                    character.equipWeapon(AppConfig.createEquipmentFactory(type).createWeapon("no weapon"));
                 }catch (IllegalArgumentException e){
                     System.out.println("type is undefined");
                 }
@@ -54,7 +56,9 @@ public class Main {
                         ========================
                         write an action command:
                         show stats
+                        show equipment
                         use ability
+                        get equipment
                         stop
                         =========================""");
                 choice = scan.nextLine();
@@ -63,6 +67,18 @@ public class Main {
                         System.out.println(character.getStats());}
                     case "use ability" -> {character.useSpecialAbility();}
                     case "stop" -> {loop = false;}
+                    case "show equipment" -> {character.displayEquipment();}
+                    case "get equipment" -> {
+                        try {
+                            System.out.println("Enter a name of weapon: ");
+                            character.equipWeapon(AppConfig.createEquipmentFactory(type).createWeapon(scan.nextLine()));
+                            System.out.println("Enter a name of armor: ");
+                            character.equipArmor(AppConfig.createEquipmentFactory(type).createArmor(scan.nextLine()));
+                        }catch (IllegalArgumentException e){
+                            System.out.println("Bad name");
+                        }
+
+                    }
                     default -> {
                         System.out.println("Bad command");
                     }

@@ -1,5 +1,7 @@
 package com.narxoz.rpg.character;
 
+import com.narxoz.rpg.equipment.Armor;
+import com.narxoz.rpg.equipment.Weapon;
 import lombok.Data;
 
 import java.util.Random;
@@ -31,6 +33,8 @@ public class Warrior implements Character {
     private final AtomicInteger mana;
     private final AtomicInteger strength;
     private final AtomicInteger intelligence;
+    private Armor armor;
+    private Weapon weapon;
     private final AtomicBoolean isAbility;
     private final ScheduledExecutorService service;
 
@@ -85,6 +89,25 @@ public class Warrior implements Character {
         service.shutdown();
     }
 
+    @Override
+    public void equipWeapon(Weapon weapon) {
+        this.weapon = weapon;
+    }
+
+    @Override
+    public void equipArmor(Armor armor) {
+        this.armor = armor;
+    }
+
+    @Override
+    public void displayEquipment() {
+        System.out.println("=======================");
+        weapon.displayInfo();
+        System.out.println("=======================");
+        armor.displayInfo();
+        System.out.println("=======================");
+    }
+
     // TODO: Implement methods from Character interface
     // You need to define those methods in Character interface first!
 
@@ -119,5 +142,7 @@ public class Warrior implements Character {
     // - void equipWeapon(Weapon weapon)
     // - void equipArmor(Armor armor)
     // - void displayEquipment()
+
+
 
 }
